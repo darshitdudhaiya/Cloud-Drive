@@ -1,4 +1,4 @@
-html::-webkit-scrollbar
+/* html::-webkit-scrollbar
     {
         width: 0.2rem;
         background-color: black;
@@ -7,4 +7,15 @@ html::-webkit-scrollbar-thumb
     {
         width: 0.5rem;
         background-color:red;
-    }
+    } */
+.scroll-bar::-webkit-scrollbar{
+    background-color: transparent;
+    width: 2px;
+    border-radius: 3px;
+}
+.scroll-bar::-webkit-scrollbar-thumb{
+    background-color: transparent;
+    width: 2px;
+    height: 5rem;
+    border-radius: 5px;
+}

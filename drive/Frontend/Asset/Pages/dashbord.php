@@ -2,10 +2,13 @@
 <?php
     include("../init.php");
 ?>
-<script src="https://kit.fontawesome.com/abc8e57fdb.js" crossorigin="anonymous"></script>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="<?php urlOf("Frontend/Asset/CSS/style.css")?>">
-<div class="inline-flex h-full bg-[#F3FCFC] w-screen">
+<head>
+  <script src="https://kit.fontawesome.com/abc8e57fdb.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="<?= urlOf("Frontend/Asset/CSS/style.css")?>">
+</head>
+
+<div class="inline-flex h-full w-screen">
     <!-- Side bar -->
     <nav class=" flex flex-col h-full w-72 border border-black sm:hidden lg:block bg-[#F3FCFC]">
         <!-- <div class="flex items-center justify-center flex-shrink-0 py-10">
@@ -133,9 +136,9 @@
         </div>
     </div>
 
-    <div class="m-10 lg:mx-8 lg:my-6 lg:w-full lg:overflow-x-hidden lg:overflow-y-auto">
+    <div class="m-10 lg:mx-5 lg:my-6 lg:w-full lg:overflow-x-hidden lg:overflow-y-auto scroll-bar">
     <!-- Main contant  -->
-      <div class="grid grid-cols-3 lg:grid-cols-5 xxl:grid-cols-7 gap-5 lg:gap-x-8 lg:gap-y-3">
+      <div class="grid grid-cols-3 lg:grid-cols-5 xxl:grid-cols-7 gap-5 lg:gap-x-0 lg:gap-y-3">
         <?php
           for ($i=0; $i < 20; $i++) { 
             echo '
