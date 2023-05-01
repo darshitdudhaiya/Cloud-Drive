@@ -6,7 +6,7 @@ include(pathOf('Frontend/Asset/Pages/Header.php'));
   <section class="flex flex-wrap text-center justify-center md:text-left px-5 py-5 lg:py-20">
     <div class="grid md:grid-cols-2 sm:grid-cols-12">
       <div class="w-4/5 h-4/5 mx-8 md:my-10">
-        <img src="./Frontend/Images/img.webp" alt="" class="">
+        <img src="./Frontend/Asset/Images/img.webp" alt="" class="">
       </div>
       <div>
         <h1 class="text-3xl tracking-tight font-bold text-gray-900 sm:text-5xl lg:text-6xl md:text-4xl">
@@ -44,8 +44,8 @@ include(pathOf('Frontend/Asset/Pages/Header.php'));
   <section class="flex flex-wrap text-center justify-center md:text-left px-5 py-5 lg:py-20">
     <div class="grid md:grid-cols-3 sm:grid-cols-12 gap-x-5  gap-y-5">
       <div class="max-w-sm p-6 border border-gray-200 hover:shadow-lg hover:cursor-pointer transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-105 duration-200">
-        <div class="sm:flex justify-center lg:block">
-          <img src="./Frontend/Images/access.png" alt="" class="h-20">
+        <div class="flex justify-center lg:block">
+          <img src="./Frontend/Asset/Images/access.png" alt="" class="h-20">
         </div>
         <div class="mt-5">
           <h5 class="mb-2 text-2xl md:text-xl font-semibold tracking-tight text-gray-900 dark:text-black">Access on all devices</h5>
@@ -53,8 +53,8 @@ include(pathOf('Frontend/Asset/Pages/Header.php'));
         </div>
       </div>
       <div class="max-w-sm p-6 border border-gray-200 hover:shadow-lg hover:cursor-pointer transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-105 duration-200">
-        <div class="sm:flex justify-center lg:block">
-          <img src="./Frontend/Images/share.png" alt="" class="h-20">
+        <div class="flex justify-center lg:block">
+          <img src="./Frontend/Asset/Images/share.png" alt="" class="h-20">
         </div>
         <div class="mt-5">
           <h5 class="mb-2 text-2xl md:text-xl font-semibold tracking-tight text-gray-900 dark:text-black">Share and collaborate</h5>
@@ -62,8 +62,8 @@ include(pathOf('Frontend/Asset/Pages/Header.php'));
         </div>
       </div>
       <div class="max-w-sm p-6 border border-gray-200 hover:shadow-lg hover:cursor-pointer transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-105 duration-200">
-        <div class="sm:flex justify-center lg:block">
-          <img src="./Frontend/Images/security.png" alt="" class="h-20">
+        <div class="flex justify-center lg:block">
+          <img src="./Frontend/Asset/Images/security.png" alt="" class="h-20">
         </div>
         <div class="mt-5">
           <h5 class="mb-2 text-2xl md:text-xl font-semibold tracking-tight text-gray-900 dark:text-black">Unbreakable security</h5>

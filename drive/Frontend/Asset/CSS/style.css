@@ -1,0 +1,10 @@
+html::-webkit-scrollbar
+    {
+        width: 0.2rem;
+        background-color: black;
+    }
+html::-webkit-scrollbar-thumb
+    {
+        width: 0.5rem;
+        background-color:red;
+    }

@@ -83,7 +83,7 @@ include("./Header.php");
                 }),
                 success: function (data) {
                     if (data == 1) {
-                        open("../../../index.php", "_self");
+                        open("./dashbord.php", "_self");
                     } else {
                         // $("#modal1").show();
                     }
