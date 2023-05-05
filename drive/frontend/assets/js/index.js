@@ -70,9 +70,11 @@ $("#close-user-model").on("click", function () {
     $("#user-profile-modal").hide();
 });
 $("#delete_model_cancel").on("click", function () {
+    $(".navbar").addClass('lg:block');
     $(".delete-model").addClass("hidden");
 });
 $("#share_model_cancel").on("click", function () {
+    $(".navbar").removeClass('hidden');
     $(".share-model").addClass("hidden");
 });
 /*-----------------------------file_upload_dashboard--------------------------------- */

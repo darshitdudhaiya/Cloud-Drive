@@ -72,7 +72,7 @@ include("../components/footer.php");
         }
         else {
             $.ajax({
-                url: "http://localhost/drive/backend/queries/forgot_password.php",
+                url: "http://192.168.1.191/drive/backend/queries/forgot_password.php",
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify({

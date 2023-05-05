@@ -93,7 +93,7 @@ include("../components/footer.php");
             }, 3000);
         } else {
             $.ajax({
-                url: "http://localhost/drive/backend/queries/adduser.php",
+                url: "http://192.168.1.191/drive/backend/queries/adduser.php",
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify({
