@@ -1,13 +1,12 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Drive/fileupload</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
     <style>
         .hasImage:hover section {
             background-color: #F3FCFC;
@@ -38,6 +37,43 @@
 </head>
 
 <body>
+    <!-- ------------ Loader -------------- -->
+    <div class="relative z-10" id="loading-image" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+      <div class="absolute my-40 lg:my-80 inset-0 flex max-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">
+        <div aria-label="Loading..." role="status" class="">
+            <svg class="h-10 w-10 animate-spin" viewBox="3 3 18 18">
+                <path class="fill-indigo-200" d="M12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5ZM3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z"></path>
+                <path class="fill-indigo-800" d="M16.9497 7.05015C14.2161 4.31648 9.78392 4.31648 7.05025 7.05015C6.65973 7.44067 6.02656 7.44067 5.63604 7.05015C5.24551 6.65962 5.24551 6.02646 5.63604 5.63593C9.15076 2.12121 14.8492 2.12121 18.364 5.63593C18.7545 6.02646 18.7545 6.65962 18.364 7.05015C17.9734 7.44067 17.3403 7.44067 16.9497 7.05015Z"></path>
+            </svg>
+        </div>
+      </div>
+    </div>
+ <!-- ------------ File not upload Modal -------------- -->
+    <div class="relative z-10 hidden" id="warningModal" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+        <div class="absolute my-40 lg:my-40 inset-0 flex max-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">
+            <div class="fixed z-10 overflow-y-auto">
+                <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                  <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                    <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                      <div class="sm:flex sm:items-start">
+                        <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                          <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                          </svg>
+                        </div>
+                        <div class="text-center sm:ml-4 sm:mt-0 sm:text-left">
+                          <h2 class="mt-2 font-bold text-gray-900" id="modal-title">Do you not upload more then 1GB of document !!!</h2>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="Modal" class="flex hidden justify-center mt-8">
         <div class="rounded-lg shadow-xl bg-gray-50 lg:w-1/2">
             <div class="m-4">
@@ -67,6 +103,7 @@
             </div>
         </div>
     </div>
+   
     <!-- component -->
     <div class="bg-[#F3FCFC] h-screen w-screen sm:px-8 md:px-16 sm:py-8">
         <main class="container mx-auto max-w-screen-lg h-full">
@@ -89,9 +126,10 @@
                             <span>Drag and drop your</span>&nbsp;<span>files anywhere or</span>
                         </p>
                         <input id="hidden-input" type="file" multiple class="hidden" />
-                        <button id="button" class="mt-2 rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none">
+                        <button id="button" class="my-2 rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none">
                             Upload a file
                         </button>
+                        <!-- <p class="text-lg font-bold text-rose-500">Note : <span class="text-gray-700 font-semibold "> You can not upload document up to 1GB </span></p> -->
                     </header>
 
                     <h1 class="pt-8 pb-3 font-semibold sm:text-lg text-gray-900">
@@ -181,9 +219,13 @@
         </li>
     </template>
 
-    <script src="../JS/jquery-3.6.0.min.js"></script>
-    <script src="../JS/index.js"></script>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script src="../js/index.js"></script>
     <script>
+        $('#loading-image').hide();
+        let fileLength = [];
+        let sumOfFiles = 0;
+
         const fileTempl = document.getElementById("file-template"),
             imageTempl = document.getElementById("image-template"),
             empty = document.getElementById("empty");
@@ -224,7 +266,8 @@
         }
 
         const gallery = document.getElementById("gallery"),
-            overlay = document.getElementById("overlay");
+            overlay = document.getElementById("overlay"),
+            size = document.getElementsByClassName("size");
 
         // click the hidden input of type file if the visible button is clicked
         // and capture the selected files
@@ -233,6 +276,7 @@
         hidden.onchange = (e) => {
             for (const file of e.target.files) {
                 addFile(gallery, file);
+                fileLength.push(file.size);
             }
         };
 
@@ -299,25 +343,68 @@
             empty.classList.remove("hidden");
             gallery.append(empty);
         };
+//------------- Convert bit length of all files ----------------
+        function sizeFormat(bytes){
+          let kb = 1024;
+          let mb = kb * 1024;
+          let gb = mb * 1024;
+          let tb = gb * 1024;
+        
+          if ((bytes >= 0) && (bytes < kb)) {
+            return bytes ,'B';
+        
+          } else if ((bytes >= kb) && (bytes < mb)) {
+          return (bytes / kb , 'KB');
+        
+          } else if ((bytes >= mb) && (bytes < gb)) {
+          return (bytes / mb , 'MB');
+        
+          } else if ((bytes >= gb) && (bytes < tb)) {
+          return (bytes / gb , 'GB');
+    
+          } else if (bytes >= tb) {
+          return (bytes / tb , 'TB');
+          } else {
+          return bytes , 'B';
+          }
+        }
 
         $('#submit').on('click', function(e) {
             e.preventDefault();
+            for (let index = 0; index < fileLength.length; index++) {
+                sumOfFiles += fileLength[index];
+            }
             let form_data = new FormData();
             let no = $("li").length - 1;
+            let totalFileSize = sizeFormat(sumOfFiles);
 
-            for (i = 0; i < no; i++) {
-                form_data.append('file', FILES[Object.keys(FILES)[i]]);
-                $.ajax({
-                    method: 'POST',
-                    url: 'http://localhost/drive/frontend/assets/includes/upload_file.php',
-                    processData: false,
-                    contentType: false,
-                    data: form_data,
-                    success: (response) => {
-                        open("./dashboard.php", "_self");
-                    }
-                });
-            }
+             if(totalFileSize == 'B' || totalFileSize == 'KB' || totalFileSize == 'MB') {
+                     for (i = 0; i < no; i++) {
+                     form_data.append('file', FILES[Object.keys(FILES)[i]]);
+                     $.ajax({
+                         method: 'POST',
+                         url: 'http://localhost/drive/frontend/assets/includes/upload_file.php',
+                         processData: false,
+                         contentType: false,
+                         data: form_data,
+                         beforeSend: function(){
+                             $('#loading-image').show();
+                         },
+                         success: (response) => {
+                             open("./dashboard.php", "_self");
+                         },
+                         complete: function() {
+                             $('#loading-image').hide();
+                         }
+                     });
+                 }
+             }
+             else if(totalFileSize == 'GB' || totalFileSize == 'TB'){
+                 $("#warningModal").removeClass('hidden');
+                 setTimeout(() => {
+                     $("#warningModal").addClass('hidden');
+                 }, 2000);
+             }
         });
     </script>
 </body>

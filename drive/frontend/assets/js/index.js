@@ -1,28 +1,12 @@
+$('#loading-image').bind('ajaxStart', function() {
+    $(this).show();
+  }).bind('ajaxStop', function() {
+    $(this).hide();
+  });
 /*-----------------------------header--------------------------------- */
-$(document).ready(function () {
-    var fullBoxWidth = $(".box").height();
-
-    $("#toggleBtn").click(function () {
-        var boxWidth = $(".box").height();
-        if (boxWidth != 0) {
-            $(".box").animate({
-                height: 0
-            });
-            $(".box").addClass("hidden");
-            $(".box").css("display", "none ");
-        } else if (boxWidth == fullBoxWidth) {
-            $(".box").removeClass("hidden");
-            $(".box").css("display", "block");
-        } else {
-            $(".box").removeClass("hidden");
-            $(".box").animate({
-                height: fullBoxWidth
-            });
-            $(".box").css("display", "block");
-        }
-    });
-});
-
+    function openNav(){
+        alert('');
+    }
 /*-----------------------------dashboard--------------------------------- */
 function openSideBar(){
     $(".navbar").removeClass('hidden');
@@ -50,33 +34,32 @@ $(".downloade_btn").on("click", function () {
     setTimeout(hide_toast, 4000);
 });
 
-$("#logout-modal").hide();
-$(".logout-cancel").on("click", function () {
-    $("#logout-modal").hide();
-});
-$(".logout").on("click", function () {
-    $("#logout-modal").show();
-});
-
-$("#logout").on("click", function () {
-    open("../includes/logout.php", "_self");
-})
-$("#user-profile-modal").hide();
-$(".user-profile").on("click", function () {
-    $("#user-profile-modal").show();
-});
-
 $("#close-user-model").on("click", function () {
     $("#user-profile-modal").hide();
 });
+
 $("#delete_model_cancel").on("click", function () {
-    $(".navbar").addClass('lg:block');
     $(".delete-model").addClass("hidden");
+    $(".navbar").addClass("lg:block");
 });
+
 $("#share_model_cancel").on("click", function () {
-    $(".navbar").removeClass('hidden');
     $(".share-model").addClass("hidden");
+    $(".navbar").addClass("lg:block");
 });
+
+$("#delete_permenantly_model_cancel").on("click", function () {
+    $(".delete-permenantly-model").addClass("hidden");
+    $(".navbar").addClass("lg:block");
+});
+
+$("#restore_model_cancel").on("click", function () {
+    $(".restore-model").addClass("hidden");
+    $(".navbar").addClass("lg:block");
+});
+
+
+
 /*-----------------------------file_upload_dashboard--------------------------------- */
 $("#cancel").on("click", function () {
     open("./dashboard.php", "_self");

@@ -2,36 +2,21 @@
 include("../includes/init.php");
 include("../components/header.php");
 ?>
-<div class="flex lg:justify-left md:justify-left sm:justify-center justify-center">
-    <div class="lg:mt-40 sm:mt-10 md:mt-10 mt-28 ">
-        <ol class="flex items-center whitespace-nowrap min-w-0" aria-label="Breadcrumb">
-            <li class="text-sm text-gray-600 dark:text-gray-400">
-                <a class="flex items-center hover:text-blue-600" href="#">
-                    Home
-                    <svg class="flex-shrink-0 h-5 w-5 text-gray-400 dark:text-gray-600 mx-2" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path d="M6 13L10 3" stroke="currentColor" stroke-linecap="round" />
-                    </svg>
-                </a>
-            </li>
-    
-            <li class="text-sm text-gray-600 dark:text-gray-400">
-                <a class="flex items-center hover:text-blue-600" href="#">
-                    App Center
-                    <svg class="flex-shrink-0 h-5 w-5 text-gray-400 dark:text-gray-600 mx-2" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path d="M6 13L10 3" stroke="currentColor" stroke-linecap="round" />
-                    </svg>
-                </a>
-            </li>
-    
-            <li class="text-sm font-semibold text-gray-800 truncate dark:text-gray-200" aria-current="page">
-                Application
-            </li>
-        </ol>
+<!-- ------------ Loader -------------- -->
+<div class="relative z-10" id="loading-image" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+    <div class="absolute my-40 lg:my-80 inset-0 flex max-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">
+        <div aria-label="Loading..." role="status" class="">
+            <svg class="h-10 w-10 animate-spin" viewBox="3 3 18 18">
+                <path class="fill-indigo-200" d="M12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5ZM3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z"></path>
+                <path class="fill-indigo-800" d="M16.9497 7.05015C14.2161 4.31648 9.78392 4.31648 7.05025 7.05015C6.65973 7.44067 6.02656 7.44067 5.63604 7.05015C5.24551 6.65962 5.24551 6.02646 5.63604 5.63593C9.15076 2.12121 14.8492 2.12121 18.364 5.63593C18.7545 6.02646 18.7545 6.65962 18.364 7.05015C17.9734 7.44067 17.3403 7.44067 16.9497 7.05015Z"></path>
+            </svg>
+        </div>
     </div>
 </div>
+
 <div class="flex justify-center">
     <div class="mt-2">
-
         <form class="my-10 w-96 border border-gray-100 p-7 shadow-xl" id="form">
             <div class="relative z-0 w-full mt-6 mb-6 group text-center">
                 <span class="block text-2xl font-semibold text-indigo-600 xl:inline sm:inline md:inline lg:inline">Create
@@ -67,6 +52,9 @@ include("../components/header.php");
             <div class="text-center">
                 <a href="<?= urlOf('frontend/assets/pages/login.php') ?>" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">I have an account.</a><br>
             </div>
+            <div class="flex justify-center">
+                <div class="g_id_signin" data-type="standard"></div>
+            </div>
         </form>
     </div>
 </div>
@@ -74,7 +62,41 @@ include("../components/header.php");
 include("../components/footer.php");
 ?>
 <script>
-     $("#form").on("submit", function(e) {
+    function decodeJwtResponse(token) {
+        let base64Url = token.split('.')[1]
+        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        return JSON.parse(jsonPayload)
+    }
+
+    let responsePayload;
+    let image;
+
+    function handleCredentialResponse(response) {
+        // decodeJwtResponse() is a custom function defined by you
+        // to decode the credential response.
+        responsePayload = decodeJwtResponse(response.credential);
+        image = responsePayload.picture;
+        // console.log("ID: " + responsePayload.sub);
+        // console.log('Full Name: ' + responsePayload.name);
+        // console.log('Given Name: ' + responsePayload.given_name);
+        // console.log('Family Name: ' + responsePayload.family_name);
+        // console.log("Image URL: " + responsePayload.picture);
+        // console.log("Email: " + responsePayload.email);
+
+        $("#name").val(responsePayload.name);
+        $("#email").val(responsePayload.email);
+    }
+
+    function onSignIn(googleUser) {
+        console.log("user is : " + googleUser);
+    }
+
+    $('#loading-image').hide();
+
+    $("#form").on("submit", function(e) {
         e.preventDefault();
         if (
             $("#name").val() == "" ||
@@ -86,21 +108,25 @@ include("../components/footer.php");
         } else if ($("#password").val() != $("#conform_password").val()) {
             $("#password").addClass('dark:border-rose-500');
             $("#conform_password").addClass('dark:border-rose-500');
-            $("#error_display").html("Password is not match");     
-            $("#error").removeClass("hidden");     
+            $("#error_display").html("Password is not match");
+            $("#error").removeClass("hidden");
             setTimeout(() => {
                 $("#error").addClass("hidden");
             }, 3000);
         } else {
             $.ajax({
-                url: "http://192.168.1.191/drive/backend/queries/adduser.php",
+                url: "http://localhost/drive/backend/queries/adduser.php",
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify({
                     name: $("#name").val(),
                     email: $("#email").val(),
-                    password: $("#password").val()
+                    password: $("#password").val(),
+                    image: image
                 }),
+                beforeSend: function() {
+                    $('#loading-image').show();
+                },
                 success: function(data) {
                     if (data == 1) {
                         open("../components/dashboard.php", "_self");
@@ -108,6 +134,9 @@ include("../components/footer.php");
                         $("#error_display").html("This email is already registered on drive");
                         $("#form").trigger("reset");
                     }
+                },
+                complete: function() {
+                    $('#loading-image').hide();
                 }
             });
         }

@@ -8,20 +8,7 @@
             <h5 class="text-lg mt-0 mb-2 text-blueGray-600">
               Find us on any of these platforms, we respond 1-2 days.
             </h5>
-            <div class="mt-6 lg:mb-0 mb-6 text-center md:text-left">
-              <button class="bg-indigo-600 text-lightBlue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
-                <i class="fab fa-twitter text-white"></i>
-             </button>
-             <button class="bg-indigo-600 text-lightBlue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
-                <i class="fab fa-facebook-square text-white"></i>
-             </button>
-             <button class="bg-indigo-600 text-blueGray-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
-                <i class="fab fa-github text-white"></i>
-             </button>
-             <button class="bg-indigo-600 text-lightBlue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
-                <i class="fab fa-linkedin text-white"></i>
-             </button>
-            </div>
+            
           </div>
           <div class="w-full lg:w-6/12 px-4">
             <div class="flex flex-wrap items-top mb-6">
@@ -62,6 +49,7 @@
           </div>
         </div>
         <hr class="my-6 border-blueGray-300">
+        <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="#" class="text-indigo-600 hover:underline">Drive</a>. All Rights Reserved.</span>
       </div>
     </section>
 </footer>
