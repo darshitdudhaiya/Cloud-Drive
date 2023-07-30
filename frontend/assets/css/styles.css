@@ -1,0 +1,50 @@
+@import url("https://fonts.googleapis.com/css2?family=Alkatra:wght@600&family=Caveat:wght@700&family=Edu+NSW+ACT+Foundation:wght@700&family=Figtree&family=Jost:wght@700&family=Raleway:wght@300&family=Rubik:wght@600&display=swap");
+
+body {
+  /* font-family: 'Raleway', sans-serif; */
+  /* font-family: 'Alkatra', cursive; */
+  /* font-family: 'Caveat', cursive; */
+  font-family: "Rubik", sans-serif;
+}
+
+.scroll-bar::-webkit-scrollbar {
+  background-color: transparent;
+  width: 2px;
+  border-radius: 3px;
+}
+
+.scroll-bar::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  width: 2px;
+  height: 5rem;
+  border-radius: 5px;
+}
+
+html::-webkit-scrollbar {
+  width: 0.3rem;
+  background-color: white;
+}
+
+html::-webkit-scrollbar-thumb {
+  width: 0.6rem;
+  border-radius: 20px;
+  background-color: rgb(79, 70, 229);
+}
+
+.list {
+  display: none;
+  position: absolute;
+  list-style: none;
+  width: 100px;
+  padding: 7px 0px;
+}
+
+.list li {
+  padding: 3px 7px;
+  cursor: pointer;
+}
+
+.list li a{
+  padding: 0;
+  text-decoration: none;
+}

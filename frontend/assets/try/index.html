@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://kit.fontawesome.com/abc8e57fdb.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Drive</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body class="customThemeBody bg-white text-black">
+    <div class="inline-flex h-full w-screen">
+        <!---------- Side bar ------------>
+        <nav
+            class=" flex flex-col h-full w-96 lg:w-72 shadow-xl hidden lg:block sm:fixed z-30 lg:relative translate-x-0 bg-[#F3FCFC] text-black navbar customTheme">
+            <div class="flex items-center justify-end m-4 lg:hidden">
+                <button onclick="close_navbar()" type="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="66" height="66" fill="black" class="bi bi-x"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                    </svg>
+                </button>
+            </div>
+            <!-- User Profile -->
+            <div class="flex items-center justify-center ">
+                <div class="max-w-sm">
+                    <div class="py-0">
+                        <div class="photo-wrapper p-2 cursor-pointer user-profile">
+                            <img class="w-36 h-36 lg:w-32 lg:h-32 rounded-full mx-auto" src="">
+                        </div>
+
+                        <div class="p-2">
+                            <h3 class="text-center text-[1.8rem] lg:text-xl font-medium leading-8">
+
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex-1 p-4 space-y-2 overflow-hidden hover:overflow-auto">
+                <div class="flex justify-center">
+                    <button
+                        class="Add inline-flex items-center justify-center mb-6 px-10 py-5 lg:px-5 lg:py-2.5 overflow-hidden text-3xl lg:text-sm font-medium transition-all ease-in duration-75 border-2 rounded-lg border-[#004c98] hover:bg-[#004c98] hover:text-white customTheme">
+                        <i class="fa-solid fa-circle-plus text-[1.2rem]"></i>
+                        <span class="mx-4">New</span>
+                    </button>
+                </div>
+
+                <div>
+                    <button id="my_drive"
+                        class="w-full flex py-7 lg:py-2 items-center space-x-2 text-3xl lg:text-sm transition-colors rounded-lg group hover:bg-[#142f4c] hover:text-white customTheme">
+                        <span aria-hidden="true" class="p-2 mx-2 rounded-lg">
+                            <i class="fa-solid fa-hard-drive"></i>
+                        </span>
+                        <span>My Drive</span>
+                    </button>
+                    <hr class="my-1 border-gray-900 md:border-gray-300">
+
+                    <button id="share"
+                        class="w-full flex py-7 lg:py-2 items-center space-x-2 text-3xl lg:text-sm transition-colors rounded-lg group hover:bg-[#142f4c] hover:text-white customTheme">
+                        <span aria-hidden="true" class="p-2 mx-2 rounded-lg">
+                            <i class="fa-solid fa-share-nodes"></i>
+                        </span>
+                        <span>Share</span>
+                    </button>
+                    <hr class="my-1 border-gray-900 md:border-gray-300">
+
+                    <button id="recent"
+                        class="w-full flex py-7 lg:py-2 items-center space-x-2 text-3xl lg:text-sm transition-colors rounded-lg group hover:bg-[#142f4c] hover:text-white customTheme">
+                        <span aria-hidden="true" class="p-2 mx-2 rounded-lg">
+                            <i class="fa-solid fa-clock"></i>
+                        </span>
+                        <span>Recent</span>
+                    </button>
+                    <hr class="my-1 border-gray-900 md:border-gray-300">
+
+                    <button id="recycle_bin"
+                        class="w-full flex py-7 lg:py-2 items-center space-x-2 text-3xl lg:text-sm transition-colors rounded-lg group hover:bg-[#142f4c] hover:text-white customTheme">
+                        <span aria-hidden="true" class="p-2 mx-2 rounded-lg">
+                            <i class="fa-solid fa-recycle"></i>
+                        </span>
+                        <span>Recycle Bin</span>
+                    </button>
+                    <hr class="my-1 border-gray-900 md:border-gray-300">
+                    <div class="flex justify-center text-[1.6rem] lg:text-[1rem] pt-10 lg:pt-4 tracking-wide"><span
+                            id='usedDataSize'>0 B of 3 GB</span>
+                    </div>
+
+                    <div class="w-full bg-gray-200 rounded-full h-2.5 mt-5 lg:mt-2 dark:bg-gray-700">
+                        <div id="usedStorage" class="bg-blue-600 h-2.5 rounded-l-full"></div>
+                    </div>
+                    <div class="flex justify-center">
+                        <button
+                            class="logout_btn flex items-center font-semibold py-4 px-10 lg:py-2 lg:px-4 bottom-4 rounded-md absolute bottom-0 w-fit transition-colors border-2 border-indigo-600 hover:bg-indigo-600 hover:text-white customTheme">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                class="w-12 h-12 lg:w-6 lg:h-6">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M15 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8m4-9-4-4m4 4-4 4m4-4H9">
+                                </path>
+                            </svg>
+                            <span class="mx-4 text-[2rem] lg:text-[1.2rem]">Logout</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div
+            class="mx-20 my-10 w-screen lg:mx-5 lg:my-6 lg:w-full overflow-x-hidden overflow-y-auto scroll-bar relative">
+            <div id="display">
+                <div class="relative flex items-center py-2">
+                    <div id="filesdata"
+                        class="mt-8 lg:mt-5 grid grid-cols-2 lg:grid-cols-5 xxl:grid-cols-7 gap-x-0 lg:gap-x-0 lg:gap-y-3 relative block gridLayout">
+                        <div class="card bg-[#F3FCFC] text-black rounded-lg shadow-lg border-gray-200 border mb-8 lg:mb-0 sm:w-96 lg:w-52"
+                            oncontextmenu="dropDown(``,this,event)">
+                            <div class="flex justify-end mt-3 mr-3">
+                                <a class="text-indigo-800">
+                                    <button value="" onclick="renameFile(this)"
+                                        class="rename_btn text-gray-800 font-bold">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="fill-current h-7 lg:h-5 w-7 lg:w-5 icon" width="20" height="20"
+                                            fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                            <path
+                                                d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                            </sv>
+                                    </button>
+                                </a>
+                            </div>
+
+                            <div class="p-5">
+                                <div class="prod-title text-center pb-5">
+                                    <p class="text-[2rem] lg:text-[1.5rem]  truncate ... normal-case font-bold">hello
+                                    </p>
+                                </div>
+                                <div class="prod-img pb-5 flex justify-center">
+                                    <img class="h-28 w-28 lg:h-20 lg:w-20  mx-8" src='' alt='' />
+                                </div>
+                                <div class="prod-info flex justify-center">
+                                    <a class="text-indigo-800" href="">
+                                        <button value="' . $file . '"
+                                            class="download_btn border border-gray-600 lg:border-gray-200 hover:bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+                                            <svg class="fill-current h-7 lg:h-5 w-7 lg:w-5 icon"
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"></path>
+                                            </svg>
+                                        </button>
+                                    </a>
+                                    <a class="text-indigo-800 px-2">
+                                        <button value="' . $file . '" onclick="deleteFile(this)"
+                                            class="mx-3 lg:mx-0 delete_btn border border-gray-600 lg:border-gray-200 hover:bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class=" h-7 lg:h-5 w-7 lg:w-5 icon"
+                                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                    </a>
+                                    <a class="text-indigo-800" target="_top">
+                                        <button value="' . $file . '" onclick="share(this)"
+                                            class="border border-gray-600 lg:border-gray-200 hover:bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                class=" h-7 lg:h-5 w-7 lg:w-5 bi bi-share icon" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z">
+                                                </path>
+                                            </svg>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                            </path>
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../js/jquery-3.6.0.min.js"></script>
+<script>
+    $.ajax({
+        url: "/drive/backend/api/ui/files.php",
+        method: "POST",
+        data: { "hello": "hello" },
+        success: function (res) {
+            console.log(res)
+        }
+    })
+</script>
+
+</html>

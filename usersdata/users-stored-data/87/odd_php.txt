@@ -1,0 +1,81 @@
+<?php include("./connection.php"); ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>exam</title>
+</head>
+<body>
+    <form method="post">
+        NAME :- <input type="text" name="facultyname" id ="facultyname"><br><br>
+        COURSE :- 
+        <select name="course" id="course">
+            <option value="BCA" name="BCA">BCA</option>
+            <option value="BBA" name="BBA">BBA</option>
+            <option value="BCOM" name="BCOM">BCOM</option>
+            <option value="MCA" name="MCA">MCA</option>
+            <option value="MBA" name="MBA">MBA</option>
+        </select><br><br>
+        SUBJECT :- <input type="text" name="facultysubject" id="facultysubject"><br><br>
+        EXPERIENCE :- <input type="number" name="facultyexperience" id="facultyexperience"><br><br>
+        <input type="submit" value="Submit Data" name="Submit_Data">
+    </form>
+    <br><br><hr>
+    <table border="1" cellpadding="10px">
+        <thead>
+            <td>Faculty ID</td>
+            <td>Faculty Name</td>
+            <td>Faculty Corse</td>
+            <td>Faculty Subject</td>
+            <td>Faculty Experience</td>
+        </thead>
+        <tbody>
+            <?php
+                $query= "SELECT * FROM `faculty`";
+                $result = mysqli_query($conn,$query);
+                while($data = mysqli_fetch_assoc($result))
+                {
+                    echo "<tr>
+                    <td>$data[id]</td>
+                    <td>$data[name]</td>
+                    <td>$data[course]</td>
+                    <td>$data[subject]</td>
+                    <td>$data[experience]</td>
+                </tr>";
+
+                }
+            ?>
+        </tbody>
+    </table>
+</body>
+</html>
+
+<?php 
+
+if(isset($_POST['Submit_Data']))
+{
+    $facultyname = $_POST['facultyname'];
+    $course = $_POST['course'];
+    $facultysubject = $_POST['facultysubject'];
+    $facultyexperience = $_POST['facultyexperience'];
+
+    if($facultyexperience <= 0 || $course =="" || $facultysubject =="" || $facultyexperience =="") 
+    {
+        echo "<script> alert('some fields are invalid or empty')</script>";
+    }
+    else{
+
+        $query = "INSERT INTO `faculty` (`name`, `course`, `subject`, `experience`) VALUES ('$facultyname', '$course', '$facultysubject', '$facultyexperience')";
+        if(mysqli_query($conn,$query))
+        {
+            header("Location: index.php");   
+        }
+        else
+        {
+            echo "data not inserted!!";
+        }
+    }
+
+}
+
+?>

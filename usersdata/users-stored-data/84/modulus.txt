@@ -1,0 +1,9 @@
+
+echo "Modulus of Two Number:"
+echo "Enter the number:"
+read no1
+echo "Enter the number 2:"
+read no2
+sum=`expr $no1 % $no2`
+echo "Ans is:"$sum
+  

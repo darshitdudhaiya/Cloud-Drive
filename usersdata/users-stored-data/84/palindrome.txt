@@ -1,0 +1,22 @@
+
+
+echo "Enter Number:"
+read num
+
+temp=$num
+reverse=0
+
+while [ $temp -gt 0 ]
+do
+	rem=`expr $temp % 10`
+	temp=`expr $temp / 10`
+	reverse=`expr $reverse \* 10 + $rem`
+done
+
+if [ $num -eq $reverse ]
+then
+	echo "Number is palindrome"
+else
+	echo "Number is not a palindrome number"
+fi
+  

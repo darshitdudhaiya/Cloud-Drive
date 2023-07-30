@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int queue[100];
+int rear = -1, front = -1, size;
+
+void insert()
+{
+    if (rear == size - 1)
+        printf("Queue is Full\n");
+    else
+    {
+        int num;
+        if (front == -1)
+            front = 0;
+        printf("Insert the element in queue: ");
+        scanf("%d", &num);
+        rear++;
+        queue[rear] = num;
+    }
+}
+
+void delete()
+{
+    if (front == -1 || front < rear)
+        printf("Queue is Empty\n");
+    else
+    {
+        printf("Element deleted from queue is: %d\n", queue[front]);
+        front++;
+    }
+}
+
+void display()
+{
+    int i;
+    if (front == -1 || front > rear)
+        printf("Queue is empty\n");
+    else
+    {
+        printf("Queue is: ");
+        for (i = front; i <= rear; i++)
+            printf("%d ", queue[i]);
+        printf("\n");
+    }
+}
+
+
+void main()
+{
+    printf("Enter size of queue: ");
+    scanf("%d", &size);
+    int choice;
+    while (1)
+    {
+        printf("1. Insert element to queue\n");
+        printf("2. Delete element from queue\n");
+        printf("3. Display all elements of queue\n");
+        printf("4. Quit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        switch (choice)
+        {
+        case 1:
+            insert();
+            break;
+        case 2:
+            delete();
+            break;
+        case 3:
+            display();
+            break;
+        case 4:
+            exit(0);
+        default:
+            printf("Invalid choice\n");
+        }
+    }
+}

@@ -1,0 +1,11 @@
+
+
+echo "Enter the number:"
+read no
+if [ `expr $no % 2` == 0 ]
+then 
+	echo $no "Number is Even"
+else
+	echo $no "Number is Odd"
+fi
+  

@@ -1,0 +1,20 @@
+
+
+echo "Enter Number:"
+read no
+n=0
+for((i = 2; i < $no; i++))
+do
+	if [ `expr $no % $i` -eq 0 ]
+	then
+		((n++))
+		break;
+	fi
+done
+if [ $n -eq 0 ]
+then
+	echo "Number is Prime"
+else
+	echo "Number is Not-Prime"
+fi
+  

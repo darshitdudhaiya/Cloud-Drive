@@ -1,0 +1,22 @@
+
+
+clear
+ld=0
+sum=0
+
+echo "enter the num: "
+read num
+copy=$num
+while [ $num -ne 0 ]
+do
+	ld=`expr $num % 10`
+	sum=`expr $sum + $ld \* $ld \* $ld`
+	num=`expr $num / 10`
+done
+if [ $sum -eq $copy ]
+then
+echo "num is armstrong"
+else
+echo "num is not armstrong"
+fi
+  

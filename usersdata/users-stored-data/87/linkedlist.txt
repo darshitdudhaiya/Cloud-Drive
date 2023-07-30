@@ -1,0 +1,189 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node
+{
+    int data;
+    struct node *next;
+};
+
+struct node *startlist;
+void create();
+void display();
+void addfirst();
+void addlast();
+void addmiddle();
+void deletefirst();
+void deletelast();
+void deletemid();
+
+int main()
+{
+    startlist = NULL;
+    create();
+    display();
+    printf("New node at first \n ");
+    addfirst();
+    display();
+    printf("New node at last \n ");
+    addlast();
+    display();
+    printf("New node at middle \n ");
+    addmiddle();
+    display();
+    printf("Delete at first \n ");
+    deletefirst();
+    display();
+    printf("Delete at last \n ");
+    deletelast();
+    display();    
+    printf("Delete from mid \n ");
+    deletemid();
+    display();
+    return 0;
+}
+
+void create()
+{
+    struct node *newnode, *temp;
+    int i,n;
+    printf("Enter number of nodes to create=");
+    scanf("%d",&n);
+    for(i=1;i<=n;i++)
+    {
+
+        if(startlist == NULL)
+        {
+        newnode = (struct node *) malloc(sizeof(struct node));
+        printf("Enter value : ");
+        scanf("%d",&newnode->data);
+        newnode->next = NULL;
+        startlist = newnode;
+        temp = startlist;
+        }
+        else
+        {
+        newnode = (struct node *) malloc(sizeof(struct node));
+        printf("Enter value : ");
+        scanf("%d",&newnode->data);
+        newnode->next = NULL;
+        temp->next=newnode;
+        temp = newnode;
+        }
+    }
+}
+
+void display()
+{
+    struct node *temp;
+    temp = startlist;
+    if(temp != NULL)
+    {
+        printf("Value is : \n");
+        while(temp != NULL)
+        {
+        printf("%d\n",temp->data);
+        temp = temp -> next;
+        }
+    }
+    else
+    {
+        printf("It is empty");
+    }
+}
+
+void addfirst()
+{
+    struct node *newnode;
+    newnode = (struct node *) malloc(sizeof(struct node));
+    printf("Enter value : ");
+    scanf("%d",&newnode->data);
+    newnode->next = startlist;
+    startlist = newnode;
+}
+
+void addlast()
+{
+    struct node *temp, *newnode;
+    newnode = (struct node *) malloc(sizeof(struct node));
+    printf("Enter : ");
+    scanf("%d",&newnode->data);
+    newnode->next= NULL;
+    temp = startlist;
+    while(temp->next != NULL)
+    {
+        temp = temp -> next;
+    }
+    temp -> next = newnode;
+    temp = newnode;
+}
+
+void addmiddle()
+{
+    struct node *newnode,*temp;
+    int i,position;
+    printf("Enter where u want new node : ");
+    scanf("%d",&position);
+    newnode = (struct node *) malloc(sizeof(struct node));
+    printf("Data : ");
+    scanf("%d",&newnode->data);
+    temp = startlist;
+    for(i = 1; i < position; i++)
+    {
+        temp = temp -> next;
+    }
+    newnode -> next = temp -> next;
+    temp -> next = newnode;
+}
+
+void deletefirst()
+{
+    struct node *todelete;
+    todelete = startlist;
+    startlist = startlist -> next;
+    free(todelete);
+}
+
+void deletelast()
+{
+    struct node *temp, *todelete;
+    temp = startlist;
+    todelete = startlist;
+
+    while(todelete->next != NULL)
+    {
+        temp = todelete;
+        todelete = todelete -> next;
+    }
+    temp -> next = NULL;
+    free(todelete);
+}
+
+void deletemid()
+{
+    int i,position;
+    struct node *temp,*todelete;
+    temp = startlist;
+    todelete = startlist;
+    x:
+    printf("Enter position of node to delete : ");
+    scanf("%d",&position);
+    if(position == 1)
+    {
+        printf("You can not delete 1 node");
+        goto x;
+    }
+
+    for(i = 1; i < position; i++)
+    {
+        temp = todelete;
+        todelete = todelete -> next; 
+    }
+    if(todelete->next==NULL)
+    {
+        printf("You can not delete last node");
+        goto x;
+    }
+    temp -> next = todelete -> next;
+    free(todelete);
+}

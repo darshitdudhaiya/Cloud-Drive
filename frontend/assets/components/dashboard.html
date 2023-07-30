@@ -1,0 +1,675 @@
+<head>
+  <script src="https://kit.fontawesome.com/abc8e57fdb.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+  <title>Drive</title>
+  <link rel="stylesheet" href="../../../dist/output.css">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body class="customThemeBody bg-white text-black">
+  <div class="inline-flex h-full w-screen">
+    <!---------- Side bar ------------>
+    <nav
+      class=" flex flex-col h-full w-96 lg:w-72 shadow-xl hidden lg:block sm:fixed z-10 lg:relative translate-x-0 bg-[#F3FCFC] text-black navbar customTheme">
+      <div class="flex items-center justify-end m-4 lg:hidden">
+        <button onclick="close_navbar()" type="button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="66" height="66" fill="black" class="bi bi-x"
+            viewBox="0 0 16 16">
+            <path
+              d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+          </svg>
+        </button>
+      </div>
+      <!-- User Profile -->
+      <div class="flex items-center justify-center ">
+        <div class="max-w-sm">
+          <div class="py-0">
+            <div class="photo-wrapper p-2 cursor-pointer user-profile">
+              <img class="w-36 h-36 lg:w-32 lg:h-32 rounded-full mx-auto" id="userImage" src="" alt="John Doe">
+            </div>
+
+            <div class="p-2">
+              <h3 id="userName" class="text-center text-[1.8rem] lg:text-xl font-medium leading-8"></h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-1 p-4 space-y-2 overflow-hidden hover:overflow-auto">
+        <div id="uploadDropdown" class="absolute rounded-lg shadow bg-white text-black customThemeModelMenu hidden"
+          style="margin-left: 40px;margin-top: 8px;">
+          <div class="cursor-pointer group border-t">
+            <a class="block p-2 border-transparent border-l-4">
+              <button id="addFolder"
+                class="inline-flex items-center justify-center px-10 lg:px-5 lg:py-2.5 overflow-hidden text-3xl lg:text-sm font-medium transition-all ease-in duration-75 border-2 rounded-lg border-gray-600 hover:bg-[#142f4c] hover:text-white customTheme">
+                <i class="fa-solid fa-folder-plus text-[1.2rem]"></i>
+                <span class="mx-2">New Folder</span>
+              </button>
+            </a>
+          </div>
+          <div class="cursor-pointer group border-t">
+            <a class="block p-2 border-transparent border-l-4">
+              <button id="addFile"
+                class="inline-flex items-center justify-center px-10 lg:px-5 lg:py-2.5 overflow-hidden text-3xl lg:text-sm font-medium transition-all ease-in duration-75 border-2 rounded-lg border-gray-600 hover:bg-[#142f4c] hover:text-white customTheme">
+                <i class="fa-solid fa-file-circle-plus text-[1.2rem]"></i>
+                <span class="mx-4">New File</span>
+              </button>
+            </a>
+          </div>
+        </div>
+        <div class="flex justify-center">
+          <button
+            class="Add inline-flex items-center justify-center mb-6 px-10 py-5 lg:px-5 lg:py-2.5 overflow-hidden text-3xl lg:text-sm font-medium transition-all ease-in duration-75 border-2 rounded-lg border-gray-600 hover:bg-[#142f4c] hover:text-white customTheme">
+            <i class="fa-solid fa-circle-plus text-[1.2rem]"></i>
+            <span class="mx-4">New</span>
+          </button>
+        </div>
+
+        <div>
+          <button id="my_drive"
+            class="w-full flex py-7 lg:py-2 items-center space-x-2 text-3xl lg:text-sm transition-colors rounded-lg group hover:bg-[#142f4c] hover:text-white customTheme">
+            <span aria-hidden="true" class="p-2 mx-2 rounded-lg">
+              <i class="fa-solid fa-hard-drive"></i>
+            </span>
+            <span>My Drive</span>
+          </button>
+          <hr class="my-1 border-gray-900 md:border-gray-300">
+
+          <button id="share"
+            class="w-full flex py-7 lg:py-2 items-center space-x-2 text-3xl lg:text-sm transition-colors rounded-lg group hover:bg-[#142f4c] hover:text-white customTheme">
+            <span aria-hidden="true" class="p-2 mx-2 rounded-lg">
+              <i class="fa-solid fa-share-nodes"></i>
+            </span>
+            <span>Share</span>
+          </button>
+          <hr class="my-1 border-gray-900 md:border-gray-300">
+
+          <button id="recent"
+            class="w-full flex py-7 lg:py-2 items-center space-x-2 text-3xl lg:text-sm transition-colors rounded-lg group hover:bg-[#142f4c] hover:text-white customTheme">
+            <span aria-hidden="true" class="p-2 mx-2 rounded-lg">
+              <i class="fa-solid fa-clock"></i>
+            </span>
+            <span>Recent</span>
+          </button>
+          <hr class="my-1 border-gray-900 md:border-gray-300">
+
+          <button id="recycle_bin"
+            class="w-full flex py-7 lg:py-2 items-center space-x-2 text-3xl lg:text-sm transition-colors rounded-lg group hover:bg-[#142f4c] hover:text-white customTheme">
+            <span aria-hidden="true" class="p-2 mx-2 rounded-lg">
+              <i class="fa-solid fa-recycle"></i>
+            </span>
+            <span>Recycle Bin</span>
+          </button>
+          <hr class="my-1 border-gray-900 md:border-gray-300">
+          <div class="flex justify-center text-[1.6rem] lg:text-[1rem] pt-10 lg:pt-4 tracking-wide">
+            Used&nbsp;<span id='usedDataSize'></span>&nbsp of 3GB
+          </div>
+
+          <div class="w-full bg-gray-200 rounded-full h-2.5 mt-5 lg:mt-2 dark:bg-gray-700">
+            <div id="usedStorage" class="bg-blue-600 h-2.5 rounded-l-full"></div>
+          </div>
+          <div class="flex justify-center">
+            <button
+              class="logout_btn flex items-center font-semibold py-4 px-10 lg:py-2 lg:px-4 bottom-4 rounded-md absolute bottom-0 w-fit transition-colors border-2 border-gray-600 hover:bg-[#142f4c] hover:text-white customTheme">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="w-12 h-12 lg:w-6 lg:h-6">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8m4-9-4-4m4 4-4 4m4-4H9"></path>
+              </svg>
+              <span class="mx-4 text-[2rem] lg:text-[1.2rem]">Logout</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="mx-20 my-10 w-screen lg:mx-5 lg:my-6 lg:w-full overflow-x-hidden overflow-y-auto scroll-bar relative">
+      <!-- Storage Notification Warning -->
+      <div
+        class="flex items-center border-l-4 border-rose-700 py-2 px-3 shadow-lg mb-2 absolute bottom-0 right-0 hidden"
+        id="storageAlert">
+        <!-- icons -->
+        <div class="text-rose-500 rounded-full border border-rose-500 bg-white mr-3">
+          <svg width="1.8em" height="1.8em" viewBox="0 0 16 16" class="bi bi-exclamation" fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
+          </svg>
+        </div>
+        <!-- message -->
+        <div class="max-w-xs text-rose-500">
+          Alert! You are used 2.50 GB of storage
+        </div>
+      </div>
+      <!---------------- Loader  ------------------>
+      <div class="relative z-10" id="loading-image" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+
+          <div aria-label="Loading..." role="status">
+            <svg class="h-10 w-10 animate-spin" viewBox="3 3 18 18">
+              <path class="fill-indigo-200"
+                d="M12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5ZM3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z">
+              </path>
+              <path class="fill-indigo-800"
+                d="M16.9497 7.05015C14.2161 4.31648 9.78392 4.31648 7.05025 7.05015C6.65973 7.44067 6.02656 7.44067 5.63604 7.05015C5.24551 6.65962 5.24551 6.02646 5.63604 5.63593C9.15076 2.12121 14.8492 2.12121 18.364 5.63593C18.7545 6.02646 18.7545 6.65962 18.364 7.05015C17.9734 7.44067 17.3403 7.44067 16.9497 7.05015Z">
+              </path>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <!--------------- Main contant  ---------------->
+      <div id="display">
+        <div class="relative flex items-center py-2 fixed">
+          <!--------------- Side-Navbar button ---------------->
+          <div class="absolute left-0 top-0 block lg:hidden">
+            <button onclick="openSideBar()" type="button"
+              class="inline-flex items-center p-2 ml-3 mt-1 text-sm text-black rounded-lg outline-none ring-2 ring-indigo-600">
+              <svg class="w-8 h-8" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                  clip-rule="evenodd"></path>
+              </svg>
+            </button>
+          </div>
+          <!--------------- Search Bar ---------------->
+          <form id="searchBar" class="lg:w-96 absolute top-2 right-72">
+            <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none"
+                  stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+              </div>
+              <input type="search" id="searchedFilename" onkeyup="searchFile(this)"
+                class="block w-full p-2 pl-10 text-sm border border-gray-300 rounded-lg bg-[#F3FCFC] text-black outline-none"
+                placeholder="Search Files..." required>
+            </div>
+          </form>
+          <!--------------- Layout button ---------------->
+          <div class="absolute right-56 cursor-pointer">
+            <button onclick="changeLayout(this)" id="changeLayout">
+              <svg data-layout="table" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                class="bi bi-layout-text-sidebar-reverse w-7 h-7" viewBox="0 0 16 16">
+                <path
+                  d="M12.5 3a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5zm0 3a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5zm.5 3.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm-.5 2.5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5z" />
+                <path
+                  d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2zM4 1v14H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h2zm1 0h9a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5V1z" />
+              </svg>
+            </button>
+          </div>
+          <!--------------- current title ---------------->
+          <div class="text-4xl lg:text-2xl font-bold tracking-tight sm:text-center ml-20 lg:ml-0">
+            <h2 id="currentLayout">My Drive</h2>
+          </div>
+          <!--------------- dark mode btn ---------------->
+          <div class="absolute right-28">
+            <button
+              class=" w-20 h-7 rounded-full bg-white flex items-center transition duration-300 focus:outline-none shadow-lg"
+              onclick="toggleTheme()">
+              <div id="switch-toggle"
+                class="w-10 h-10 relative rounded-full transition duration-500 transform bg-yellow-500 -translate-x-2 p-1 text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              </div>
+            </button>
+          </div>
+          <!------------- Notification button ---------------->
+          <div class="flex-shrink-0 absolute right-0 mr-10">
+            <button onclick="notificationButtonOpen()"
+              class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker">
+              <div class="relative inline-flex">
+                <div
+                  class="absolute mt-2 lg:mt-1 mr-1 right-0 top-0 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-pink-700 text-white py-1 px-2 text-sm lg:text-xs z-auto">
+                  <span id="notificationCount"></span>
+                </div>
+                <div
+                  class="p-2 flex items-center justify-center rounded-lg bg-indigo-600 text-center text-white dark:text-gray-200">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                    class="h-9 w-9 lg:h-6 lg:w-6">
+                    <path fill-rule="evenodd"
+                      d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z"
+                      clip-rule="evenodd" />
+                  </svg>
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+        <!---------- Layout:Grid form ---------->
+        <div id="filesdata"
+          class="mt-8 lg:mt-5 grid grid-cols-2 lg:grid-cols-5 xxl:grid-cols-7 gap-x-0 lg:gap-x-0 lg:gap-y-3 relative block gridLayout">
+        </div>
+
+        <!---------- Layout:Tabluer form ---------->
+        <div class="mt-8 lg:mt-5 hidden listLayout">
+
+          <table id="myTable" class="display">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>File Name</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="filesdataRow">
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+
+      <!----------------- Logout-Model  ---------------------->
+      <div tabindex="-1" class="relative z-50 hidden logout-model" aria-labelledby="modal-title" role="dialog"
+        aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+          <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <div
+              class="relative bg-white text-black transform overflow-hidden rounded-lg text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg customThemeModel">
+              <div class="px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                  <div
+                    class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                    <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                      stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                    </svg>
+                  </div>
+                  <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                    <h3 class="text-[1.5rem] lg:text-base font-semibold leading-6" id="modal-title">Are You Sure?</h3>
+                    <div class="mt-2">
+                      <p class="text-[1.2rem] lg:text-sm">Do you want to Logout?</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                <button type="button"
+                  class="logout_model_btn inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-[1.2rem] lg:text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Yes</button>
+                <button type="button"
+                  class="logout_model_cancel mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-[1.2rem] lg:text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-----------------Create Folder modal -------------------->
+      <div class="relative z-50 hidden folder-model" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+          <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <div
+              class="relative bg-white text-black transform overflow-hidden roug-white text-left shadow-xl transition-all sm:w-full sm:max-w-lg customThemeModelShare">
+              <div class="px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                  <div
+                    class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10">
+                    <svg class="w-8 h-8 lg:h-6 lg:w-6 text-indigo-600" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                      class="bi bi-folder-plus" viewBox="0 0 16 16">
+                      <path
+                        d="m.5 3 .04.87a1.99 1.99 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2zm5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19c-.24 0-.47.042-.683.12L1.5 2.98a1 1 0 0 1 1-.98h3.672z" />
+                      <path
+                        d="M13.5 10a.5.5 0 0 1 .5.5V12h1.5a.5.5 0 1 1 0 1H14v1.5a.5.5 0 1 1-1 0V13h-1.5a.5.5 0 0 1 0-1H13v-1.5a.5.5 0 0 1 .5-.5z" />
+                    </svg>
+                  </div>
+                  <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                    <h3 class="text-[1.8rem] lg:text-base font-semibold leading-6" id="modal-title">Enter Folder Name
+                    </h3>
+                    <div class="mt-2">
+                      <p class="text-lg lg:text-sm" id="share_model_details"></p>
+                      <div class="relative z-0 w-[370px] mt-6 mb-6 group">
+                        <input type="text" name="floating_folder_name" id="folderName"
+                          class="block py-2.5 px-2 w-full text-lg lg:text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-indigo-600 focus:outline-none focus:ring-0  peer"
+                          placeholder=" " required />
+                        <label for="floating_folder_name"
+                          class="peer-focus:font-medium absolute text-sm dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Folder
+                          Name</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                <button type="button" id="folder_model_btn"
+                  class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-xl lg:text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 sm:ml-3 sm:w-auto">Create</button>
+                <button type="button" id="folder_model_cancel"
+                  class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-xl lg:text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!----------------- Share File modal -------------------->
+      <div class="relative z-50 hidden share-model" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+          <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <div
+              class="relative bg-white text-black transform overflow-hidden roug-white text-left shadow-xl transition-all sm:w-full sm:max-w-lg customThemeModelShare">
+              <div class="px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                  <div
+                    class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10">
+                    <svg class="w-8 h-8 lg:h-6 lg:w-6 text-indigo-600" xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 512 512">
+                      <path
+                        d="M307 34.8c-11.5 5.1-19 16.6-19 29.2v64H176C78.8 128 0 206.8 0 304C0 417.3 81.5 467.9 100.2 478.1c2.5 1.4 5.3 1.9 8.1 1.9c10.9 0 19.7-8.9 19.7-19.7c0-7.5-4.3-14.4-9.8-19.5C108.8 431.9 96 414.4 96 384c0-53 43-96 96-96h96v64c0 12.6 7.4 24.1 19 29.2s25 3 34.4-5.4l160-144c6.7-6.1 10.6-14.7 10.6-23.8s-3.8-17.7-10.6-23.8l-160-144c-9.4-8.5-22.9-10.6-34.4-5.4z" />
+                    </svg>
+                  </div>
+                  <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                    <h3 class="text-[1.8rem] lg:text-base font-semibold leading-6" id="modal-title">Enter Email</h3>
+                    <div class="mt-2">
+                      <p class="text-lg lg:text-sm" id="share_model_details"></p>
+                      <div class="relative z-0 w-[370px] mt-6 mb-6 group">
+                        <input type="email" name="floating_email" id="email"
+                          class="block py-2.5 px-2 w-full text-lg lg:text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-indigo-600 focus:outline-none focus:ring-0  peer"
+                          placeholder=" " required />
+                        <label for="floating_email"
+                          class="peer-focus:font-medium absolute text-sm dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email
+                          address</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                <button type="button" id="share_model_btn"
+                  class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-xl lg:text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 sm:ml-3 sm:w-auto">Share</button>
+                <button type="button" id="share_model_cancel"
+                  class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-xl lg:text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!----------------- Delete File Modal ----------------------->
+      <div class="relative z-50 hidden delete-model" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+          <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <div
+              class="relative bg-white text-black transform overflow-hidden rounded-lg text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg customThemeModelDelete">
+              <div class="px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                  <div
+                    class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                    <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                      stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                    </svg>
+                  </div>
+                  <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                    <h3 class="text-[1.5rem] lg:text-base font-semibold leading-6" id="modal-title">Are You Sure?</h3>
+                    <div class="mt-2">
+                      <p class="text-[1.2rem] lg:text-sm" id="delete_model_details"></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                <button type="button" id="delete_model_btn"
+                  class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-[1.2rem] lg:text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Delete</button>
+                <button type="button" id="delete_model_cancel"
+                  class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-[1.2rem] lg:text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!----------------- Restore File Modal ----------------------->
+      <div class="relative z-50 hidden restore-model" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+          <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <div
+              class="relative bg-white text-black transform overflow-hidden rounded-lg text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg customThemeModelRestore">
+              <div class="px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                  <div
+                    class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full sm:mx-0 sm:h-10 sm:w-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                      stroke-width="1.5" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99">
+                      </path>
+                    </svg>
+                  </div>
+                  <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                    <h3 class="text-[1.5rem] lg:text-base font-semibold leading-6" id="modal-title">Are You Sure?</h3>
+                    <div class="mt-2">
+                      <p class="text-[1.2rem] lg:text-sm" id="restore_model_details"></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                <button type="button" id="restore_model_btn"
+                  class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-xl lg:text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 sm:ml-3 sm:w-auto">Restore</button>
+                <button type="button" id="restore_model_cancel"
+                  class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-[1.2rem] lg:text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!----------------- Delete File Permenantly Modal ----------------------->
+      <div class="relative z-50 hidden delete-permenantly-model" aria-labelledby="modal-title" role="dialog"
+        aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+          <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <div
+              class="relative bg-white text-black transform overflow-hidden rounded-lg text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg customThemeModelDeletePermenantly">
+              <div class="px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                  <div
+                    class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                    <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                      stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                    </svg>
+                  </div>
+                  <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                    <h3 class="text-[1.5rem] lg:text-base font-semibold leading-6" id="modal-title">Are You Sure?</h3>
+                    <div class="mt-2">
+                      <p class="text-[1.2rem] lg:text-sm" id="delete_permenantly_model_details"></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                <button type="button" id="delete_permenantly_model_btn"
+                  class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-[1.2rem] lg:text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Delete</button>
+                <button type="button" id="delete_permenantly_model_cancel"
+                  class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-[1.2rem] lg:text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!----------------- Rename File modal -------------------->
+      <div class="relative z-50 hidden rename-model" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+          <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <div
+              class="relative bg-white text-black transform overflow-hidden rounded-lg text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg customThemeModelRename">
+              <div class="px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                  <div
+                    class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                      class="bi bi-pencil" viewBox="0 0 16 16">
+                      <path
+                        d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                    </svg>
+                  </div>
+                  <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                    <h3 class="text-[1.5rem] lg:text-base font-semibold leading-6" id="modal-title">Enter new name</h3>
+                    <div class="mt-2">
+                      <p class="text-lg lg:text-sm" id="rename_model_details"></p>
+                      <div class="relative z-0 w-[370px] mt-6 mb-6 group">
+                        <input type="text" name="floating_email" id="name"
+                          class="block  py-2.5 px-2 w-full text-lg lg:text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-indigo-600 focus:outline-none focus:ring-0  peer"
+                          placeholder=" " required />
+                        <label for="floating_email"
+                          class="peer-focus:font-medium absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">File
+                          name</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class=" px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                <button type="button" id="rename_model_btn"
+                  class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-xl lg:text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 sm:ml-3 sm:w-auto">Rename</button>
+                <button type="button" id="rename_model_cancel"
+                  class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-xl lg:text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!----------------- User-Profile-Model  ---------------------->
+      <div tabindex="-1" class="relative z-50 hidden profile-model" aria-labelledby="modal-title" role="dialog"
+        aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+          <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <div
+              class="relative bg-white text-black transform overflow-hidden rounded-lg text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg customThemeModelUser">
+              <div class="px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                <div class="flex justify-center">
+                  <form class="w-96 p-7">
+                    <div class="relative z-0 w-full group text-center">
+                      <span class="block text-2xl font-semibold xl:inline sm:inline md:inline lg:inline">Update Your
+                        Profile</span>
+                    </div>
+                    <div class="max-w-sm">
+                      <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 ml-2 sm:col-span-4 md:mr-3">
+                        <!-- Photo File Input -->
+                        <input type="file" class="hidden" x-ref="photo" x-on:change="
+                        photoName = $refs.photo.files[0].name;
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            photoPreview = e.target.result;
+                        };
+                        reader.readAsDataURL($refs.photo.files[0]);
+                        form_data1.append('file', $refs.photo.files[0]);">
+
+                        <div class="text-center">
+                          <!-- Current Profile Photo -->
+                          <div class="mt-2" x-show="! photoPreview">
+                            <img src="" id="userimage-update-model" class="w-40 h-40 m-auto rounded-full shadow">
+                          </div>
+                          <!-- New Profile Photo Preview -->
+                          <div class="mt-2" x-show="photoPreview" style="display: none;">
+                            <span class="block w-40 h-40 rounded-full m-auto shadow"
+                              x-bind:style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'"
+                              style="background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url('null');">
+                            </span>
+                          </div>
+                          <button type="button"
+                            class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md font-semibold text-xs uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-400 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150 mt-2 ml-3"
+                            x-on:click.prevent="$refs.photo.click()">
+                            Select New Photo
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="relative z-0 w-full mt-6 mb-6 group">
+                      <input type="text" id="username" value=""
+                        class="block py-2.5 px-2 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-indigo-600 focus:outline-none focus:ring-0  peer"
+                        placeholder=" " onkeypress="check()" required />
+                      <label
+                        class="peer-focus:font-medium absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Username</label>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                <button type="button" onclick="update_profile(this)"
+                  class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-xl lg:text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 sm:ml-3 sm:w-auto">Update</button>
+                <button type="button"
+                  class="profile_update_cancel_btn mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-[1.2rem] lg:text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!----------------- Notification bar ------------------------>
+    <div class="flex flex-col">
+      <div class="relative hidden" id="notificationSection">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+        <div
+          class="h-screen flex-1 p-4 z-10 space-y-8 overflow-x-hidden overflow-y-auto w-96 lg:w-80 absolute top-0 right-0 shadow-2xl bg-white scroll-bar">
+          <div class="" id="notificationBar">
+            <div class="flex items-center justify-between ">
+              <h3 class="text-[2rem] lg:text-lg font-semibold text-gray-600 dark:text-light">Notification</h3>
+              <button onclick="notificationClose()" type="button" class="rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="black" class="bi bi-x"
+                  viewBox="0 0 16 16">
+                  <path
+                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                </svg>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!----------------- Setting menu ------------------------>
+    <div class="flex flex-col">
+      <div class="relative hidden" id="settingSection">
+        <div
+          class="h-screen flex-1 p-4 z-50 space-y-8 overflow-x-hidden overflow-y-auto w-96 lg:w-80 absolute top-0 right-0 shadow-2xl bg-white scroll-bar">
+          <div class="flex items-center justify-between ">
+            <div class="inline-block">
+              <h3 class="text-[2rem] lg:text-lg font-semibold text-gray-600 dark:text-light">Setting</h3>
+              <p class="text-[1.5rem] lg:text-sm mt-1 font-semibold text-gray-400">See our dashboard options</p>
+            </div>
+            <button id="settingColseBtn" type="button" class="rounded-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="black" class="bi bi-x"
+                viewBox="0 0 16 16">
+                <path
+                  d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+              </svg>
+            </button>
+          </div>
+          <div>
+            <div>
+              <h3 class="text-[1.5rem] lg:text-lg font-semibold text-gray-600">Sidebar Colors</h3>
+            </div>
+            <div class="inline-flex mt-2">
+              <button class="rounded-full bg-[#b616a7] p-3" value="#db0b94" onclick="changeTheme(this)"></button>
+              <button class="rounded-full bg-[#f88736] p-3 ml-2" value="#f88736" onclick="changeTheme(this)"></button>
+              <button class="rounded-full bg-[#006A4E] p-3 ml-2" value="#006A4E" onclick="changeTheme(this)"></button>
+              <button class="rounded-full bg-[#f53944] p-3 ml-2" value="#f53944" onclick="changeTheme(this)"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!----------------- Drop-down-context-menu ------------------------>
+    <div id="list" class="absolute rounded shadow bg-white text-black hidden customThemeModelMenu"></div>
+
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="../js/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpine-collective/alpine-magic-helpers@0.3.x/dist/index.js"></script>
+</body>
+
+</html>
+<!-- https://www.freepik.com/search?format=search&query=login&type=vector -->

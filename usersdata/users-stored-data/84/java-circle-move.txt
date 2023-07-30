@@ -1,0 +1,34 @@
+circle move program
+
+import java.applet.*;
+import java.awt.*;
+
+public class MoveCircle extends Applet implements Runnable {
+   Thread t;
+   int x = 0, y = 50, r = 20;
+
+   public void start() {
+      t = new Thread(this);
+      t.start();
+   }
+
+   public void run() {
+      while (true) {
+         x += 5; // move the circle to the right by 5 pixels
+         if (x > getWidth()) { // if the circle reaches the right end of the applet
+            x = -r; // start again from the left side
+         }
+         repaint(); // update the applet
+         try {
+            Thread.sleep(50); // wait for 50 milliseconds
+         } catch (InterruptedException e) {
+            e.printStackTrace();
+         }
+      }
+   }
+
+   public void paint(Graphics g) {
+      g.setColor(Color.RED);
+      g.fillOval(x, y, r*2, r*2); // draw a circle at position (x, y)
+   }
+}

@@ -1,0 +1,16 @@
+
+
+			l=0
+for((i=1;i<=4;i++))
+do 
+	
+		for((j=1;j<=i;j++))
+		do
+			echo -n "$l "
+		done
+		echo ""
+			l=`expr $l + 1`
+done
+	
+
+  

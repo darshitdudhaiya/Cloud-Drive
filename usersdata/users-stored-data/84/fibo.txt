@@ -1,0 +1,13 @@
+echo "Enter the number:"
+read no
+
+num1=0
+num2=1
+
+for((i=0;i<=$no;i++))
+do
+	sum=$(($num1+$num2))
+	num1=$num2
+	num2=$sum
+	echo "Number is:" $num1
+done

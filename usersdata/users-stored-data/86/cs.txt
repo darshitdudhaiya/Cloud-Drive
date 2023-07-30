@@ -1,0 +1,165 @@
+
+*STARTING DASHBOARD FORM*
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Data.SqlClient;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CRUD
+{
+    public partial class dashboard : Form
+    {
+        public dashboard()
+        {
+            InitializeComponent();
+        }
+
+        private void i_button_Click(object sender, EventArgs e)
+        {
+            SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-6OTBI46\SQLEXPRESS;Initial Catalog=crud;Integrated Security=True");
+            conn.Open();
+            string sql = "insert into data values(@id,@firstname,@lastname)";
+            SqlCommand cmd = new SqlCommand(sql, conn);
+
+            cmd.Parameters.AddWithValue("@id", id_text.Text);
+            cmd.Parameters.AddWithValue("@firstname", f_text.Text);
+            cmd.Parameters.AddWithValue("@lastname", l_text.Text);
+            cmd.ExecuteNonQuery();
+            conn.Close();
+
+            MessageBox.Show("Successfully Inserted!");
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-6OTBI46\SQLEXPRESS;Initial Catalog=crud;Integrated Security=True");
+            conn.Open();
+            string sql = "update data set firstname=@firstname, lastname=@lastname where id=@id";
+            SqlCommand cmd = new SqlCommand(sql, conn);
+
+            cmd.Parameters.AddWithValue("@id", id_text.Text);
+            cmd.Parameters.AddWithValue("@firstname", f_text.Text);
+            cmd.Parameters.AddWithValue("@lastname", l_text.Text);
+            cmd.ExecuteNonQuery();
+            conn.Close();
+
+            MessageBox.Show("Successfully Updated");
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-6OTBI46\SQLEXPRESS;Initial Catalog=crud;Integrated Security=True");
+            conn.Open();
+            string sql = "delete data where id=@id";
+            SqlCommand cmd = new SqlCommand(sql, conn);
+
+            cmd.Parameters.AddWithValue("@id", id_text.Text);
+            cmd.ExecuteNonQuery();
+            conn.Close();
+
+            MessageBox.Show("Successfully Deleted");
+        }
+
+      
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-6OTBI46\SQLEXPRESS;Initial Catalog=crud;Integrated Security=True");
+            conn.Open();
+            string sql = "select * from data";
+            SqlCommand cmd = new SqlCommand(sql, conn);
+
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+
+            dataGridView1.DataSource = dt;
+
+        }
+    }
+}
+*END DASHBOARD FORM*
+
+
+*STARTING MAIN FILE*
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Data.SqlClient;
+using Microsoft.VisualBasic.ApplicationServices;
+using System.Diagnostics.Eventing.Reader;
+
+namespace CRUD 
+{
+    public partial class Form2 : Form
+    {
+        public Form2()
+        {
+            InitializeComponent();
+        }
+        public void ValidateUserInfo(string user, string pass) {
+
+            SqlConnection connection = new SqlConnection(@"Data Source=DESKTOP-6OTBI46\SQLEXPRESS;Initial Catalog=crud;Integrated Security=True");
+            string sql = "select * from crud where username='"+u_text.Text+"'and password='"+p_text.Text+"'";
+            SqlCommand cmd = new SqlCommand(sql,connection);
+
+            cmd.Parameters.AddWithValue("username",user);
+            cmd.Parameters.AddWithValue("password",pass);
+
+            connection.Open();
+
+            DataTable dt = new DataTable();
+            SqlDataAdapter ad = new SqlDataAdapter(cmd);
+            ad.Fill(dt);
+
+            if (dt.Rows.Count > 0)
+            {
+                dashboard ds = new dashboard();
+                ds.Show();
+
+            }
+            else {
+                MessageBox.Show("Invalid Username and Password,Try Again!");
+            }
+            connection.Close();
+
+        }
+        private void insert_button_Click(object sender, EventArgs e)
+        {
+
+            if (String.IsNullOrEmpty(u_text.Text))
+            {
+                MessageBox.Show("Field Required");
+                return;
+            }
+            else if (String.IsNullOrEmpty(p_text.Text))
+            {
+                MessageBox.Show("Field Required");
+                return;
+            }
+            ValidateUserInfo(u_text.Text.Trim(),p_text.Text.Trim());
+            
+
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            createaccount ca=new createaccount();
+            ca.Show();
+        }
+    }
+}
+
+*END MAIN FILE*
